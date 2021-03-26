@@ -37,8 +37,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Install and Build it
         run: | 
-        npm install
-        npm run build
+          npm install
+          npm run build
       - name: Delpoy It
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
