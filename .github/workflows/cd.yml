@@ -19,7 +19,6 @@ env:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   deploy-dev-test:
   
     name: DElpoys to dev test environment
@@ -45,3 +44,26 @@ jobs:
           branch: gh-pages # The branch the action should deploy to.
           folder: build # The folder the action should deploy.
         
+  deploy-prod:
+    name: Deploy to Production environment
+    needs: [deploy-dev-test]
+    runs-on: ubuntu-latest
+    environment:
+      name: Production
+      url: https://${{ env.owner }}.${{ env.domain }}/${{ env.repo }}//
+    env:
+      repo: actions-workshop-prod
+    steps:
+      - name: Check prod out 
+        uses: actions/checkout@v2.3.1
+      - name: Install and Build
+        run: |
+          npm install
+          npm run build
+      - name: Deprod it out
+        uses: JamesIves/github-pages-deploy-action@4.1.0
+        with: 
+          branch: gh-pages
+          folder: build
+          token: ${{ secrets.TOKEN }}
+          repository-name: ${{ env.owner }}/${{ env.repo }}
