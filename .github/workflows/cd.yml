@@ -65,5 +65,5 @@ jobs:
         with: 
           branch: gh-pages
           folder: build
-          token: ${{ secrets.TOKEN }}
+          token: ${{ secrets.PATPATPAT }}
           repository-name: ${{ env.owner }}/${{ env.repo }}
